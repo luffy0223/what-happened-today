@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luffy.weiboservice.mapper.JobInfoMapper">
+  <resultMap id="BaseResultMap" type="com.luffy.weiboservice.entity.JobInfo">
+    <!--@mbg.generated-->
+    <!--@Table job_info-->
+    <id column="job_id" jdbcType="INTEGER" property="jobId" />
+    <result column="job_date" jdbcType="VARCHAR" property="jobDate" />
+    <result column="job_time" jdbcType="VARCHAR" property="jobTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    job_id, job_date, job_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from job_info
+    where job_id = #{jobId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from job_info
+    where job_id = #{jobId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="job_id" keyProperty="jobId" parameterType="com.luffy.weiboservice.entity.JobInfo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into job_info (job_date, job_time)
+    values (#{jobDate,jdbcType=VARCHAR}, #{jobTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="job_id" keyProperty="jobId" parameterType="com.luffy.weiboservice.entity.JobInfo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into job_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jobDate != null">
+        job_date,
+      </if>
+      <if test="jobTime != null">
+        job_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jobDate != null">
+        #{jobDate,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTime != null">
+        #{jobTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luffy.weiboservice.entity.JobInfo">
+    <!--@mbg.generated-->
+    update job_info
+    <set>
+      <if test="jobDate != null">
+        job_date = #{jobDate,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTime != null">
+        job_time = #{jobTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where job_id = #{jobId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luffy.weiboservice.entity.JobInfo">
+    <!--@mbg.generated-->
+    update job_info
+    set job_date = #{jobDate,jdbcType=VARCHAR},
+      job_time = #{jobTime,jdbcType=VARCHAR}
+    where job_id = #{jobId,jdbcType=INTEGER}
+  </update>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update job_info
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="job_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when job_id = #{item.jobId,jdbcType=INTEGER} then #{item.jobDate,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="job_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when job_id = #{item.jobId,jdbcType=INTEGER} then #{item.jobTime,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+    </trim>
+    where job_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.jobId,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="job_id" keyProperty="jobId" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into job_info
+    (job_date, job_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.jobDate,jdbcType=VARCHAR}, #{item.jobTime,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+</mapper>
